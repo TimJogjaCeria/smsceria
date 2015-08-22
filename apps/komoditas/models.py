@@ -25,17 +25,17 @@ class Jenis(models.Model):
     update_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name_plural = "Komoditas"
+        verbose_name_plural = "Jenis"
 
     def __unicode__(self):
-        return '%s' % (self.nama)
+        return '%s - %s' % (self.komoditas, self.nama)
 
 
 class Barang(models.Model):
-    user = models.ForeignKey(Profile, related_name="hargaku")
+    user = models.ForeignKey(User, related_name="hargaku")
     jenis = models.ForeignKey(Jenis, related_name="harganya")
-    stok = models.DecimalField(max_digits=15, decimal_places=2, default=0, null=True)
-    price = models.DecimalField(max_digits=15, decimal_places=2, default=0, null=True)
+    stok = models.DecimalField(max_digits=15, decimal_places=2, default=0)
+    price = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     latitude = models.CharField(max_length=100, null=True)
     longitude = models.CharField(max_length=100, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -44,6 +44,7 @@ class Barang(models.Model):
 
     class Meta:
         verbose_name_plural = "Barang"
+        unique_together = ('user', 'jenis',)
 
     def __unicode__(self):
         return '%s : %s - %s' % (self.user, self.jenis, self.price)

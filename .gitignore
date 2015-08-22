@@ -3,3 +3,4 @@
 db.sqlite3
 send_sms.c
 smstest.py
+static/

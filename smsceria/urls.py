@@ -22,7 +22,8 @@ urlpatterns = [
     # url(r'^home/', 'smsceria.views.home',name='home'),
 
     # URL API
-    # url(r'^api/urls/', include('apps.rangkings.api.urls')),
+    url(r'^api/profile/', include('apps.profil.api.urls')),
+    url(r'^api/komoditas/', include('apps.komoditas.api.urls')),
     url(r'^api/token-auth/$', token_auth_views.obtain_auth_token),
     # API Doc
     url(r'^api/docs/', include('rest_framework_swagger.urls')),
