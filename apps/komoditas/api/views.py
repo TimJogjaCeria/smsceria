@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions, generics, status
 from ..models import Komoditas, Jenis, Barang
 from .serializers import KomoditasSerializer, JenisSerializer, BarangSerializer, DetailBarangSerializer
+from .filters import JenisFilter
 # from .permissions import IsOwner
 
 
@@ -38,6 +39,7 @@ class ListJenisAPI(generics.ListAPIView):
     serializer_class = JenisSerializer
     permission_classes = (permissions.IsAuthenticated, )
     authentication_classes = (authentication.TokenAuthentication,)
+    filter_class = JenisFilter
 
 
 class ListBarangAPI(generics.ListCreateAPIView):
