@@ -65,9 +65,10 @@ class DetailBarangAPI(generics.RetrieveUpdateDestroyAPIView):
 
 
 class Indikator(object):
-    def __init__(self, summary, details):
+    def __init__(self, summary, details, trend):
         self.summary = summary
         self.details = details
+        self.trend = trend
 
 # class IndikatorDetail(object):
 #     def __init__(self, detail):
@@ -108,7 +109,7 @@ class ListIndikatorAPI(views.APIView):
         indikators = []
         for res in result:
             try:
-                jns = jenis.get(nama__icontains=res.get('jenis_beras'))
+                jns = jenis.get(nama=res.get('jenis_beras'))
                 # import ipdb; ipdb.set_trace();
                 harga_std = float(res.get('harga'))
                 delt = jns.mean_price() - harga_std
@@ -117,7 +118,12 @@ class ListIndikatorAPI(views.APIView):
                 detail = 'Jumlah data yang dipakai didapat dari %s titik.' % jns.harganya.count()
                 details.append(detail)
                 summary = 'Pada %s %s terdapat kenaikan rata2 %s  harga standar pemerintah.' % (komoditas.nama, jns.nama, (str(persentase)+'%'))
-                indikator1 = Indikator(summary=summary, details=details)
+                # trend
+                if persentase > 30:
+                    trend = 1
+                else:
+                    trend = 2
+                indikator1 = Indikator(summary=summary, details=details, trend=trend)
                 indikators.append(indikator1)
             except Jenis.DoesNotExist:
                 pass

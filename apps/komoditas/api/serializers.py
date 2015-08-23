@@ -116,5 +116,6 @@ class IndikatorvitalDetailSerializer(serializers.Serializer):
 
 class IndikatorvitalSerializer(serializers.Serializer):
     summary = serializers.CharField()
+    trend = serializers.CharField()
     # details = IndikatorvitalDetailSerializer(many=True)
     details = serializers.ListField()
