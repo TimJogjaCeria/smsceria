@@ -100,3 +100,7 @@ class DetailBarangSerializer(serializers.ModelSerializer):
     def get_user(self, obj):
         serializers = ProfileSerializer(obj.user.profile)
         return serializers.data
+
+
+class IndikatorvitalSerializer(serializers.Serializer):
+    summary = serializers.CharField()

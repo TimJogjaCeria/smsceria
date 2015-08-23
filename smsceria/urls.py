@@ -22,6 +22,7 @@ urlpatterns = [
     # url(r'^home/', 'smsceria.views.home',name='home'),
 
     # URL API
+    url(r'^ioapi/summary/', include('apps.komoditas.api.ioapi_urls')),
     url(r'^api/profile/', include('apps.profil.api.urls')),
     url(r'^api/komoditas/', include('apps.komoditas.api.urls')),
     url(r'^api/token-auth/$', token_auth_views.obtain_auth_token),
