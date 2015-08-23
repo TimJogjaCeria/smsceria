@@ -25,6 +25,7 @@ class JenisSerializer(serializers.ModelSerializer):
 class BarangSerializer(serializers.ModelSerializer):
     komoditas = serializers.SerializerMethodField()
     jenis = serializers.SerializerMethodField()
+    user = serializers.SerializerMethodField()
     # Write
     komoditas_id = serializers.IntegerField(write_only=True)
     jenis_id = serializers.IntegerField(write_only=True, required=False)
@@ -35,7 +36,7 @@ class BarangSerializer(serializers.ModelSerializer):
     class Meta:
         model = Barang
         fields = ('id', 'komoditas_id', 'jenis_id', 'komoditas', 'nama', 'jenis', 'stok', 'price',
-                  'latitude', 'longitude', 'is_deleted', 'create_at', 'update_at')
+                  'latitude', 'longitude', 'is_deleted', 'create_at', 'update_at', 'user')
 
     def validate_jenis_id(self, value):
         try:
@@ -56,6 +57,10 @@ class BarangSerializer(serializers.ModelSerializer):
 
     def get_jenis(self, obj):
         return obj.jenis.nama
+
+    def get_user(self, obj):
+        serializers = ProfileSerializer(obj.user.profile)
+        return serializers.data
 
     def create(self, validated_data):
         request = self.context.get('request')
