@@ -19,7 +19,7 @@ from rest_framework.authtoken import views as token_auth_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    # url(r'^home/', 'smsceria.views.home',name='home'),
+    url(r'^home/', 'smsceria.views.home',name='home'),
 
     # URL API
     url(r'^ioapi/summary/', include('apps.komoditas.api.ioapi_urls')),

@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Avg
 from rest_framework import serializers
 from ..models import Komoditas, Jenis, Barang
 from apps.profil.api.serializers import ProfileSerializer
@@ -13,13 +13,18 @@ class KomoditasSerializer(serializers.ModelSerializer):
 
 class JenisSerializer(serializers.ModelSerializer):
     komoditas = serializers.SerializerMethodField()
+    mean_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Jenis
-        fields = ('id', 'nama', 'komoditas', 'create_at', 'update_at')
+        fields = ('id', 'nama', 'komoditas', 'mean_price', 'create_at', 'update_at')
 
     def get_komoditas(self, obj):
         return obj.komoditas.nama
+
+    def get_mean_price(self, obj):
+        # import ipdb; ipdb.set_trace();
+        return obj.mean_price()
 
 
 class BarangSerializer(serializers.ModelSerializer):
@@ -106,6 +111,10 @@ class DetailBarangSerializer(serializers.ModelSerializer):
         serializers = ProfileSerializer(obj.user.profile)
         return serializers.data
 
+class IndikatorvitalDetailSerializer(serializers.Serializer):
+    detail = serializers.CharField()
 
 class IndikatorvitalSerializer(serializers.Serializer):
     summary = serializers.CharField()
+    # details = IndikatorvitalDetailSerializer(many=True)
+    details = serializers.ListField()

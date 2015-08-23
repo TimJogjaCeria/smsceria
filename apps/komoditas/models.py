@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q, Avg
 from django.contrib.auth.models import User
 from apps.profil.models import Profile
 
@@ -29,6 +30,14 @@ class Jenis(models.Model):
 
     def __unicode__(self):
         return '%s - %s' % (self.komoditas, self.nama)
+
+    def mean_price(self):
+        res = self.harganya.all().aggregate(Avg('price'))
+        if res.get('price__avg'):
+            mean = res.get('price__avg')
+        else:
+            mean = 0
+        return round(mean,2)
 
 
 class Barang(models.Model):
