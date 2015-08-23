@@ -121,6 +121,8 @@ class ListIndikatorAPI(views.APIView):
                 indikators.append(indikator1)
             except Jenis.DoesNotExist:
                 pass
+            else:
+                pass
 
             # import ipdb; ipdb.set_trace();
         indikator_serializer = IndikatorvitalSerializer(indikators, many=True)
